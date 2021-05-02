@@ -9,7 +9,7 @@ function TeamCard(props) {
   return (
     <figure className='team-card'>
       <img src={image} alt={`${name} Logo`} className='logo'/>
-      <figcaption>{name}</figcaption>
+      <figcaption className='caption'>{name}</figcaption>
     </figure>
   )
 }
