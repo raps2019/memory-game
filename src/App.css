@@ -8,28 +8,67 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
   }
 
 
-.cards-container {
+.container__game-board {
   margin: 20px;
   display: grid;
+  align-items: center;
+  justify-items: center;
   grid-template-columns: repeat(4, 1fr);
 }
 
-.team-card {
+.container__card {
   display: grid;
   width: 200px;
+  margin-bottom: 50px;
   align-items: center;
   justify-items: center;
   border-radius: 8%;
-  border: 5px black solid;
+  border: 5px rgb(202, 202, 202) solid;
   box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.25)
 }
 
-.logo {
+.container__card--clicked {
+  border: 5px rgb(194, 104, 104) solid;
+}
+
+.card__logo {
   width: 100%;
   height: auto;
   border-radius: 5%;
 }
 
-.caption {
+.card__caption {
+  padding: 10px;
+  font-size: 0.75em;
+}
+
+.container__score-board {
+  font-family: 'Monoton', cursive;
+  font-weight: 400;
+  font-size: 2em;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.container__score {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.container__high-score {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.text__score {
+  font-size: 1.5em;
+  padding: 10px;
+}
+
+.text__label {
+  font-size: 1em;
   padding: 10px;
 }
