@@ -3,6 +3,7 @@ import teamCardsArray from './teamCardsArray'
 import GameBoard from './GameBoard'
 import ScoreBoard from './ScoreBoard'
 import StatusDisplay from './StatusDisplay'
+import { CSSTransition } from 'react-transition-group'
 
 function Game() {
 
@@ -11,6 +12,7 @@ function Game() {
   const [ round, setRound ] = useState(1)
   const [ statusMessage, setStatusMessage ] = useState('')
   const [ displayStatus, setDisplayStatus ] = useState(false)
+  const [ appearScoreboard , setAppearScoreboard ] = useState(true)
 
   const shuffleArray = (array) => {
     const arrayCopy = array.slice(0)
@@ -21,7 +23,7 @@ function Game() {
     return arrayCopy;
   }
 
-  const [ cards, setCards ] = useState(shuffleArray(teamCardsArray).slice(0, 5))
+  const [ cards, setCards ] = useState(shuffleArray(teamCardsArray).slice(0, 5));
 
   const handleCardClick = (id) => {
     //Check if card has been clicked.
@@ -103,15 +105,22 @@ function Game() {
         statusMessage={statusMessage}
         displayStatus={displayStatus}
       />
-      <ScoreBoard
-        round={round}
-        score={score}
-        highScore={highScore}
-      />
-      <GameBoard 
-        cards={cards}
-        handleCardClick={handleCardClick}
-      />
+      <CSSTransition
+        in={appearScoreboard}
+        appear={true}
+        timeout={2000}
+        classNames="fade"
+      >
+        <ScoreBoard
+          round={round}
+          score={score}
+          highScore={highScore}
+        />
+      </CSSTransition>
+        <GameBoard 
+          cards={cards}
+          handleCardClick={handleCardClick}
+        />
     </div>
   )
 }

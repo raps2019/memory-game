@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 function Card(props) {
 
   const { id, name, image, clicked, handleCardClick } = props;

@@ -7,6 +7,45 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
   /* font-family: 'Lato', sans-serif; */
   }
 
+ /*CSS TransitionGroup Classes*/
+  /* appear - on page load */
+  .fade-appear {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .fade-appear.fade-appear-active {
+    opacity: 1;
+    transition: opacity 2000ms ease-in;
+  }
+
+  /* enter */
+  .fade-enter {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 2000ms ease-in;
+  }
+
+  /* exit */
+  .fade-exit {
+    opacity: 1;
+  }
+
+  .fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 2000ms ease-out;
+  }
+
+  .fade-exit-done {
+    opacity: 0;
+  }
+
+ /*^^^^^CSS TransitionGroup Classes^^^^^*/
+
 
 .container__game-board {
   margin: 20px;
