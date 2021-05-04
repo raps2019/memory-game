@@ -2,10 +2,14 @@ import React from 'react'
 
 function ScoreBoard(props) {
 
-  const {score, highScore } = props
+  const {round, score, highScore } = props
 
   return (
     <div className="container__score-board">
+      <div className="container__round">
+        <p className="text__label">Round:</p>
+        <p className="text__score">{round}</p>  
+      </div>
       <div className="container__score">
         <p className="text__label">Score:</p>
         <p className="text__score">{score}</p>  

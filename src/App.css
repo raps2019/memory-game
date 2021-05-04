@@ -13,7 +13,7 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
   display: grid;
   align-items: center;
   justify-items: center;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .container__card {
@@ -24,11 +24,13 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
   justify-items: center;
   border-radius: 8%;
   border: 5px rgb(202, 202, 202) solid;
-  box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.25)
+  box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
 
 .container__card--clicked {
   border: 5px rgb(194, 104, 104) solid;
+  box-shadow: 12px 12px 12px rgba(255, 0, 0, 0.25);
 }
 
 .card__logo {
@@ -51,6 +53,13 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
   justify-content: space-around;
 }
 
+
+.container__round {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
 .container__score {
   padding: 10px;
   display: flex;
@@ -71,4 +80,34 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
 .text__label {
   font-size: 1em;
   padding: 10px;
+}
+
+.text__status {
+  font-family: 'Monoton', cursive;
+  font-weight: 400;
+  font-size: 5em;
+}
+
+.container__status {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+.container__status--show {
+  opacity: 1;
+  background-color: rgba(201, 201, 201, 0.85);
+  pointer-events: none;
+}
+
+.container__status--hide {
+  opacity: 0;
+  pointer-events: none
 }

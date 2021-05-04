@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import teamCardsArray from './teamCardsArray'
 import GameBoard from './GameBoard'
 import ScoreBoard from './ScoreBoard'
+import StatusDisplay from './StatusDisplay'
 
 function Game() {
 
@@ -12,6 +13,9 @@ function Game() {
 
   const [ score, setScore ] = useState(0)
   const [ highScore, setHighScore ] = useState(0)
+  const [ round, setRound ] = useState(1)
+  const [ statusMessage, setStatusMessage ] = useState('')
+  const [ displayStatus, setDisplayStatus ] = useState(false)
 
   const shuffleArray = (array) => {
     const arrayCopy = array.slice(0)
@@ -22,18 +26,24 @@ function Game() {
     return arrayCopy;
   }
 
-  const [ cards, setCards ] = useState(shuffleArray(teamCardsArray))
+  const [ cards, setCards ] = useState(shuffleArray(teamCardsArray).slice(0, 5))
 
   const handleCardClick = (id) => {
-
+    //Check if card has been clicked.
     if (cards.find( item => item.id === id).clicked === false) {
-      advanceGame(id)
+      advanceTurn(id)
     } else {
-      resetGame()
+      setStatusMessage('Game Over')
+      setDisplayStatus(true)
+      setTimeout( () => {
+        setDisplayStatus(false)
+        setStatusMessage('')
+        resetGame()
+      },3000)
     }
   }
 
-  const advanceGame = (id) => {
+  const advanceTurn = (id) => {
     setCards(
       shuffleArray(cards.map( item => 
         item.id === id
@@ -51,21 +61,56 @@ function Game() {
       setHighScore(score)
     }
     setScore(0)
-    setCards(
-      cards.map( item => ({...item, clicked: false}))
-    )
+    setRound(1)
+    setCards(shuffleArray(teamCardsArray).slice(0,5))
   }
 
-  useEffect( () => {
-    // console.log(cards)
-    console.log(`Score : ${score}`)
-    console.log(`High Score: ${highScore}`)
-  },[cards, score, highScore])
+  const advanceRound = (round) => {
+    
+    if (round === 1 || round === 2 || round === 3 || round === 4 || round === 5) {
+      setStatusMessage('Round Complete')
+      setDisplayStatus(true)
+      setTimeout( () => {
+        setDisplayStatus(false)
+        setStatusMessage('')
+        setRound(round + 1);
+        if (round === 1) {
+          setCards(shuffleArray(teamCardsArray).slice(0,10))
+        } else if (round === 2) {
+          setCards(shuffleArray(teamCardsArray).slice(0,15))
+        } else if (round === 3) {
+          setCards(shuffleArray(teamCardsArray).slice(0,20))
+        } else if (round === 4) {
+          setCards(shuffleArray(teamCardsArray).slice(0,25))
+        } else if (round === 5) {
+          setCards(shuffleArray(teamCardsArray).slice(0,30))
+        }
+      }, 3000)
+    } else {
+      setStatusMessage('You Win')
+      setDisplayStatus(true)
+      setTimeout( () => {
+        setDisplayStatus(false)
+        setStatusMessage('')
+        resetGame()
+      }, 3000)   
+    }
+  }  
 
+  useEffect( () => { 
+    if ( !cards.find( item => item.clicked === false)) {
+      advanceRound(round)
+    }
+  }, [cards] )
 
   return (
     <div>
+      <StatusDisplay
+        statusMessage={statusMessage}
+        displayStatus={displayStatus}
+      />
       <ScoreBoard
+        round={round}
         score={score}
         highScore={highScore}
       />
