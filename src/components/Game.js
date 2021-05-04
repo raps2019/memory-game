@@ -6,11 +6,6 @@ import StatusDisplay from './StatusDisplay'
 
 function Game() {
 
-  //Move this to JSON
-  //Import list and randomize the order
-  //Create a function to randomize array. run it everytime we set state for cards
-  //Everytime card is clicked, randomize array. 
-
   const [ score, setScore ] = useState(0)
   const [ highScore, setHighScore ] = useState(0)
   const [ round, setRound ] = useState(1)
@@ -35,7 +30,7 @@ function Game() {
     } else {
       setStatusMessage('Game Over')
       setDisplayStatus(true)
-      setTimeout( () => {
+      setTimeout(() => {
         setDisplayStatus(false)
         setStatusMessage('')
         resetGame()
@@ -66,11 +61,10 @@ function Game() {
   }
 
   const advanceRound = (round) => {
-    
     if (round === 1 || round === 2 || round === 3 || round === 4 || round === 5) {
       setStatusMessage('Round Complete')
       setDisplayStatus(true)
-      setTimeout( () => {
+      setTimeout(() => {
         setDisplayStatus(false)
         setStatusMessage('')
         setRound(round + 1);
@@ -89,7 +83,7 @@ function Game() {
     } else {
       setStatusMessage('You Win')
       setDisplayStatus(true)
-      setTimeout( () => {
+      setTimeout(() => {
         setDisplayStatus(false)
         setStatusMessage('')
         resetGame()
@@ -97,7 +91,7 @@ function Game() {
     }
   }  
 
-  useEffect( () => { 
+  useEffect(() => { 
     if ( !cards.find( item => item.clicked === false)) {
       advanceRound(round)
     }
