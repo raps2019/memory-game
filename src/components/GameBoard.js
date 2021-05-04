@@ -4,18 +4,17 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 function GameBoard(props) {
 
-  const [ appearGameboard , setAppearGameboard ] = useState(true)
-
-
-  const {handleCardClick, cards} = props;
+  const {handleCardClick, cards, cardsInProp} = props;
 
   return (
     <div className='container__game-board'>
     {cards.map( item => (
       <CSSTransition
-        in={appearGameboard}
+        in={cardsInProp}
+        key={item.id}
         appear={true}
         enter={true}
+        exit={true}
         timeout={2000}
         classNames="fade"
       >

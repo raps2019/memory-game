@@ -12,7 +12,9 @@ function Game() {
   const [ round, setRound ] = useState(1)
   const [ statusMessage, setStatusMessage ] = useState('')
   const [ displayStatus, setDisplayStatus ] = useState(false)
-  const [ appearScoreboard , setAppearScoreboard ] = useState(true)
+  const [ scoreboardInProp , setScoreboardInProp ] = useState(true)
+  const [ cardsInProp , setCardsInProp ] = useState(true)
+  const [ gameboardInProp, setGameboardInProp ] = useState(true)
 
   const shuffleArray = (array) => {
     const arrayCopy = array.slice(0)
@@ -30,24 +32,33 @@ function Game() {
     if (cards.find( item => item.id === id).clicked === false) {
       advanceTurn(id)
     } else {
-      setStatusMessage('Game Over')
+      setStatusMessage(`Game Over`)
       setDisplayStatus(true)
+      setGameboardInProp(false)
       setTimeout(() => {
         setDisplayStatus(false)
         setStatusMessage('')
+        setGameboardInProp(true)
+        setScoreboardInProp(false)
+        setScoreboardInProp(true)
         resetGame()
-      },3000)
+      },2000)
     }
   }
 
   const advanceTurn = (id) => {
-    setCards(
-      shuffleArray(cards.map( item => 
-        item.id === id
-        ? {...item, clicked: true}
-        : item
-      ))
-    )
+    
+    setCardsInProp(false)
+    setTimeout( () => {
+      setCards(
+        shuffleArray(cards.map( item => 
+          item.id === id
+          ? {...item, clicked: true}
+          : item
+        ))
+      )
+      setCardsInProp(true)
+    }, 2000)
     setScore( prevScore => (
       prevScore + 1
     ))
@@ -66,22 +77,28 @@ function Game() {
     if (round === 1 || round === 2 || round === 3 || round === 4 || round === 5) {
       setStatusMessage('Round Complete')
       setDisplayStatus(true)
+      setGameboardInProp(false)
       setTimeout(() => {
         setDisplayStatus(false)
         setStatusMessage('')
         setRound(round + 1);
         if (round === 1) {
           setCards(shuffleArray(teamCardsArray).slice(0,10))
+          setGameboardInProp(true)
         } else if (round === 2) {
           setCards(shuffleArray(teamCardsArray).slice(0,15))
+          setGameboardInProp(true)
         } else if (round === 3) {
           setCards(shuffleArray(teamCardsArray).slice(0,20))
+          setGameboardInProp(true)
         } else if (round === 4) {
           setCards(shuffleArray(teamCardsArray).slice(0,25))
+          setGameboardInProp(true)
         } else if (round === 5) {
           setCards(shuffleArray(teamCardsArray).slice(0,30))
+          setGameboardInProp(true)
         }
-      }, 3000)
+      }, 2000)
     } else {
       setStatusMessage('You Win')
       setDisplayStatus(true)
@@ -89,7 +106,7 @@ function Game() {
         setDisplayStatus(false)
         setStatusMessage('')
         resetGame()
-      }, 3000)   
+      }, 2000)   
     }
   }  
 
@@ -106,8 +123,10 @@ function Game() {
         displayStatus={displayStatus}
       />
       <CSSTransition
-        in={appearScoreboard}
+        in={scoreboardInProp}
         appear={true}
+        enter={true}
+        exit={false}
         timeout={2000}
         classNames="fade"
       >
@@ -117,10 +136,20 @@ function Game() {
           highScore={highScore}
         />
       </CSSTransition>
+      <CSSTransition
+        in={gameboardInProp}
+        appear={true}
+        enter={true}
+        exit={true}
+        timeout={2000}
+        classNames="fade"
+      >
         <GameBoard 
           cards={cards}
           handleCardClick={handleCardClick}
+          cardsInProp={cardsInProp}
         />
+      </CSSTransition>
     </div>
   )
 }
