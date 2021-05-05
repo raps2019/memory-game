@@ -11,7 +11,6 @@ function Game() {
   const [ highScore, setHighScore ] = useState(0)
   const [ round, setRound ] = useState(1)
   const [ statusMessage, setStatusMessage ] = useState('')
-  const [ displayStatus, setDisplayStatus ] = useState(false)
   const [ scoreboardInProp , setScoreboardInProp ] = useState(true)
   const [ cardsInProp , setCardsInProp ] = useState(true)
   const [ gameboardInProp, setGameboardInProp ] = useState(true)
@@ -108,10 +107,10 @@ function Game() {
     } else {
       setStatusMessage('You Win')
       setStatusInProp(true)
+      setGameboardInProp(false)
       setTimeout(() => {
-        setDisplayStatus(false)
         resetGame()
-      }, 2000)   
+      }, 3000)   
     }
   }  
 
@@ -133,7 +132,6 @@ function Game() {
         >
         <StatusDisplay
           statusMessage={statusMessage}
-          displayStatus={displayStatus}
         />
       </CSSTransition>
       <CSSTransition

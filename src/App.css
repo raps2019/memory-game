@@ -213,12 +213,13 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
   justify-content: center;
   align-items: center;
   transition: all 0.5s ease;
+  pointer-events: none;
 }
 
 .container__status--show {
   opacity: 1;
   /* background-color: rgba(201, 201, 201, 0.85); */
-  pointer-events: none;
+  
 }
 
 .container__status--hide {
