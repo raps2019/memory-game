@@ -15,8 +15,8 @@ function GameBoard(props) {
         appear={true}
         enter={true}
         exit={true}
-        timeout={2000}
-        classNames="fade"
+        timeout={250}
+        classNames="fade-card"
       >
         <Card 
           id={item.id}

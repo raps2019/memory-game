@@ -15,6 +15,7 @@ function Game() {
   const [ scoreboardInProp , setScoreboardInProp ] = useState(true)
   const [ cardsInProp , setCardsInProp ] = useState(true)
   const [ gameboardInProp, setGameboardInProp ] = useState(true)
+  const [ statusInProp, setStatusInProp ] = useState(false)
 
   const shuffleArray = (array) => {
     const arrayCopy = array.slice(0)
@@ -33,35 +34,36 @@ function Game() {
       advanceTurn(id)
     } else {
       setStatusMessage(`Game Over`)
-      setDisplayStatus(true)
+      setStatusInProp(true)
       setGameboardInProp(false)
+      setScoreboardInProp(false)
       setTimeout(() => {
-        setDisplayStatus(false)
-        setStatusMessage('')
-        setGameboardInProp(true)
-        setScoreboardInProp(false)
-        setScoreboardInProp(true)
         resetGame()
       },2000)
     }
   }
 
   const advanceTurn = (id) => {
-    
-    setCardsInProp(false)
-    setTimeout( () => {
-      setCards(
-        shuffleArray(cards.map( item => 
-          item.id === id
-          ? {...item, clicked: true}
-          : item
-        ))
-      )
-      setCardsInProp(true)
-    }, 2000)
-    setScore( prevScore => (
-      prevScore + 1
-    ))
+
+    if ( cards.filter(item => item.clicked === false).length === 1) {
+      setScore( prevScore => prevScore + 1)
+      advanceRound(round)
+    } else {
+        setCardsInProp(false)
+        setTimeout( () => {
+        setCards(
+          shuffleArray(cards.map( item => 
+            item.id === id
+            ? {...item, clicked: true}
+            : item
+          ))
+        )
+        setCardsInProp(true)
+      }, 250)
+      setScore( prevScore => (
+        prevScore + 1
+      ))
+    }  
   }
 
   const resetGame = () => {
@@ -70,17 +72,18 @@ function Game() {
     }
     setScore(0)
     setRound(1)
+    setStatusInProp(false)
     setCards(shuffleArray(teamCardsArray).slice(0,5))
+    setScoreboardInProp(true)
+    setGameboardInProp(true)
   }
 
   const advanceRound = (round) => {
     if (round === 1 || round === 2 || round === 3 || round === 4 || round === 5) {
       setStatusMessage('Round Complete')
-      setDisplayStatus(true)
+      setStatusInProp(true)
       setGameboardInProp(false)
       setTimeout(() => {
-        setDisplayStatus(false)
-        setStatusMessage('')
         setRound(round + 1);
         if (round === 1) {
           setCards(shuffleArray(teamCardsArray).slice(0,10))
@@ -99,35 +102,46 @@ function Game() {
           setGameboardInProp(true)
         }
       }, 2000)
+      setTimeout( () => {
+        setStatusInProp(false)
+      }, 2000)
     } else {
       setStatusMessage('You Win')
-      setDisplayStatus(true)
+      setStatusInProp(true)
       setTimeout(() => {
         setDisplayStatus(false)
-        setStatusMessage('')
         resetGame()
       }, 2000)   
     }
   }  
 
-  useEffect(() => { 
-    if ( !cards.find( item => item.clicked === false)) {
-      advanceRound(round)
-    }
-  }, [cards] )
+  // useEffect(() => { 
+  //   if ( !cards.find( item => item.clicked === false)) {
+  //     advanceRound(round)
+  //   }
+  // }, [cards] )
 
   return (
     <div>
-      <StatusDisplay
-        statusMessage={statusMessage}
-        displayStatus={displayStatus}
-      />
+      <CSSTransition
+          in={statusInProp}
+          appear={true}
+          enter={true}
+          exit={true}
+          timeout={2000}
+          classNames="fade-status"
+        >
+        <StatusDisplay
+          statusMessage={statusMessage}
+          displayStatus={displayStatus}
+        />
+      </CSSTransition>
       <CSSTransition
         in={scoreboardInProp}
         appear={true}
         enter={true}
-        exit={false}
-        timeout={2000}
+        exit={true}
+        timeout={1000}
         classNames="fade"
       >
         <ScoreBoard
@@ -141,7 +155,7 @@ function Game() {
         appear={true}
         enter={true}
         exit={true}
-        timeout={2000}
+        timeout={1000}
         classNames="fade"
       >
         <GameBoard 

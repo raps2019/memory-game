@@ -17,7 +17,7 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
 
   .fade-appear.fade-appear-active {
     opacity: 1;
-    transition: opacity 2000ms ease-in;
+    transition: opacity 1000ms ease-in;
   }
 
   /* enter */
@@ -28,7 +28,7 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
 
   .fade-enter.fade-enter-active {
     opacity: 1;
-    transition: opacity 2000ms ease-in;
+    transition: opacity 1000ms ease-in;
   }
 
   /* exit */
@@ -38,10 +38,84 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
 
   .fade-exit.fade-exit-active {
     opacity: 0;
-    transition: opacity 2000ms ease-out;
+    transition: opacity 1000ms ease-out;
   }
 
   .fade-exit-done {
+    opacity: 0;
+  }
+
+/* Card CSS Transitions */
+
+  .fade-card-appear {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .fade-card-appear.fade-card-appear-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
+  }
+
+  /* enter */
+  .fade-card-enter {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .fade-card-enter.fade-card-enter-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
+  }
+
+  /* exit */
+  .fade-card-exit {
+    opacity: 1;
+  }
+
+  .fade-card-exit.fade-card-exit-active {
+    opacity: 0;
+    transition: opacity 250ms ease-out;
+  }
+
+  .fade-card-exit-done {
+    opacity: 0;
+  }
+
+  /* Status Display React CSS Transitions */
+
+  .fade-status-appear {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .fade-status-appear.fade-status-appear-active {
+    opacity: 1;
+    transition: opacity 2000ms ease-in;
+  }
+
+  /* enter */
+  .fade-status-enter {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .fade-status-enter.fade-status-enter-active {
+    opacity: 1;
+    transition: opacity 2000ms ease-in;
+  }
+
+  /* exit */
+  .fade-status-exit {
+    opacity: 1;
+  }
+
+  .fade-status-exit.fade-status-exit-active {
+    opacity: 0;
+    transition: opacity 2000ms ease-out;
+  }
+
+  .fade-status-exit-done {
     opacity: 0;
   }
 
