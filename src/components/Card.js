@@ -12,7 +12,7 @@ function Card(props) {
       className={`container__card ${clicked === true ? 'container__card--clicked' : null}`}
       onClick={(e) => handleCardClick(id)}>
       <img src={image} alt={`${name} Logo`} className='card__logo'/>
-      <figcaption className='card__caption'>{name.toUpperCase()}</figcaption>
+      {/* <figcaption className='card__caption'>{name.toUpperCase()}</figcaption> */}
     </figure>
   )
 }

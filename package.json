@@ -12,8 +12,11 @@
     "react-transition-group": "^4.4.1",
     "web-vitals": "^1.0.1"
   },
+  "homepage": "http://raps2019.github.io/memory-game",
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -35,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.1.0"
   }
 }

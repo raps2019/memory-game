@@ -132,7 +132,7 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
 
 .container__card {
   display: grid;
-  width: 200px;
+  width: 300px;
   margin-bottom: 50px;
   align-items: center;
   justify-items: center;
@@ -143,8 +143,8 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
 }
 
 .container__card--clicked {
-  border: 5px rgb(194, 104, 104) solid;
-  box-shadow: 12px 12px 12px rgba(255, 0, 0, 0.25);
+  /* border: 5px rgb(194, 104, 104) solid;
+  box-shadow: 12px 12px 12px rgba(255, 0, 0, 0.25); */
 }
 
 .card__logo {
@@ -200,6 +200,13 @@ html, body, div, h1, h2, h3, h4, h5, h6, p, input, label, button, li, img, figur
   font-family: 'Monoton', cursive;
   font-weight: 400;
   font-size: 5em;
+}
+
+.text__status--instructions {
+  font-family: 'Julius Sans One', sans-serif;
+  font-size: 2em;
+  align-self: flex-end;
+  padding-bottom: 50px;
 }
 
 .container__status {

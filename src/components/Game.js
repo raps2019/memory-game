@@ -10,11 +10,12 @@ function Game() {
   const [ score, setScore ] = useState(0)
   const [ highScore, setHighScore ] = useState(0)
   const [ round, setRound ] = useState(1)
-  const [ statusMessage, setStatusMessage ] = useState('')
+  const [ statusMessage, setStatusMessage ] = useState('Objective: Card can only be selected once per round. Click all cards to advance')
   const [ scoreboardInProp , setScoreboardInProp ] = useState(true)
   const [ cardsInProp , setCardsInProp ] = useState(true)
   const [ gameboardInProp, setGameboardInProp ] = useState(true)
-  const [ statusInProp, setStatusInProp ] = useState(false)
+  const [ statusInProp, setStatusInProp ] = useState(true)
+  const [ statusClass, setStatusClass ] = useState('text__status--instructions')
 
   const shuffleArray = (array) => {
     const arrayCopy = array.slice(0)
@@ -32,8 +33,10 @@ function Game() {
     if (cards.find( item => item.id === id).clicked === false) {
       advanceTurn(id)
     } else {
-      setStatusMessage(`Game Over`)
+      setStatusClass(null)
+      setStatusInProp(false)
       setStatusInProp(true)
+      setStatusMessage(`Game Over`)
       setGameboardInProp(false)
       setScoreboardInProp(false)
       setTimeout(() => {
@@ -66,9 +69,6 @@ function Game() {
   }
 
   const resetGame = () => {
-    if (score > highScore) {
-      setHighScore(score)
-    }
     setScore(0)
     setRound(1)
     setStatusInProp(false)
@@ -79,6 +79,7 @@ function Game() {
 
   const advanceRound = (round) => {
     if (round === 1 || round === 2 || round === 3 || round === 4 || round === 5) {
+      setStatusClass(null)
       setStatusMessage('Round Complete')
       setStatusInProp(true)
       setGameboardInProp(false)
@@ -100,7 +101,7 @@ function Game() {
           setCards(shuffleArray(teamCardsArray).slice(0,30))
           setGameboardInProp(true)
         }
-      }, 2000)
+      }, 3000)
       setTimeout( () => {
         setStatusInProp(false)
       }, 2000)
@@ -114,11 +115,11 @@ function Game() {
     }
   }  
 
-  // useEffect(() => { 
-  //   if ( !cards.find( item => item.clicked === false)) {
-  //     advanceRound(round)
-  //   }
-  // }, [cards] )
+  useEffect(() => { 
+    if (score >= highScore) {
+      setHighScore(score)
+    }
+  }, [score] )
 
   return (
     <div>
@@ -132,6 +133,7 @@ function Game() {
         >
         <StatusDisplay
           statusMessage={statusMessage}
+          statusClass={statusClass}
         />
       </CSSTransition>
       <CSSTransition
