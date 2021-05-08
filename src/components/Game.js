@@ -10,12 +10,14 @@ function Game() {
   const [ score, setScore ] = useState(0)
   const [ highScore, setHighScore ] = useState(0)
   const [ round, setRound ] = useState(1)
+  const [ lives, setLives ] = useState(3)
   const [ statusMessage, setStatusMessage ] = useState('Objective: Card can only be selected once per round. Click all cards to advance')
   const [ scoreboardInProp , setScoreboardInProp ] = useState(true)
   const [ cardsInProp , setCardsInProp ] = useState(true)
   const [ gameboardInProp, setGameboardInProp ] = useState(true)
   const [ statusInProp, setStatusInProp ] = useState(true)
   const [ statusClass, setStatusClass ] = useState('text__status--instructions')
+  const [ backgroundFlashColor, setBackgroundFlashColor ] = useState('')
 
   const shuffleArray = (array) => {
     const arrayCopy = array.slice(0)
@@ -33,15 +35,27 @@ function Game() {
     if (cards.find( item => item.id === id).clicked === false) {
       advanceTurn(id)
     } else {
-      setStatusClass(null)
-      setStatusInProp(false)
-      setStatusInProp(true)
-      setStatusMessage(`Game Over`)
-      setGameboardInProp(false)
-      setScoreboardInProp(false)
-      setTimeout(() => {
-        resetGame()
-      },2000)
+      if(lives === 0) {
+        setStatusClass(null)
+        setStatusInProp(true)
+        setBackgroundFlashColor('red')
+        setStatusMessage(`Game Over`)
+        setTimeout(() => {
+          setGameboardInProp(false)
+          setScoreboardInProp(false)
+          setBackgroundFlashColor('')
+        },3000)
+        setTimeout(() => {
+          resetGame()
+        }, 3500)
+      } else {
+        // advanceTurn(id)
+        setLives( prevLives => prevLives - 1)
+        setBackgroundFlashColor('red')
+        setTimeout(() => {
+          setBackgroundFlashColor('')
+        }, 250)
+      }
     }
   }
 
@@ -71,7 +85,10 @@ function Game() {
   const resetGame = () => {
     setScore(0)
     setRound(1)
-    setStatusInProp(false)
+    setLives(3)
+    // setStatusInProp(false)
+    setStatusMessage('Objective: Card can only be selected once per round. Click all cards to advance')
+    setStatusClass('text__status--instructions')
     setCards(shuffleArray(teamCardsArray).slice(0,5))
     setScoreboardInProp(true)
     setGameboardInProp(true)
@@ -134,6 +151,7 @@ function Game() {
         <StatusDisplay
           statusMessage={statusMessage}
           statusClass={statusClass}
+          backgroundFlashColor={backgroundFlashColor}
         />
       </CSSTransition>
       <CSSTransition
@@ -148,6 +166,7 @@ function Game() {
           round={round}
           score={score}
           highScore={highScore}
+          lives={lives}
         />
       </CSSTransition>
       <CSSTransition
