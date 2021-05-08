@@ -37,19 +37,21 @@ function Game() {
     } else {
       if(lives === 0) {
         setStatusClass(null)
-        setStatusInProp(true)
+        // setStatusInProp(true)
         setBackgroundFlashColor('red')
         setStatusMessage(`Game Over`)
+        setStatusInProp(false)
+        setGameboardInProp(false)
+        setScoreboardInProp(false)
         setTimeout(() => {
-          setGameboardInProp(false)
-          setScoreboardInProp(false)
-          setBackgroundFlashColor('')
-        },3000)
+          // 
+        },1000)
         setTimeout(() => {
           resetGame()
-        }, 3500)
+        }, 2000)
       } else {
         // advanceTurn(id)
+        console.log('Running Here')
         setLives( prevLives => prevLives - 1)
         setBackgroundFlashColor('red')
         setTimeout(() => {
@@ -86,12 +88,14 @@ function Game() {
     setScore(0)
     setRound(1)
     setLives(3)
-    // setStatusInProp(false)
+    setBackgroundFlashColor('')
     setStatusMessage('Objective: Card can only be selected once per round. Click all cards to advance')
     setStatusClass('text__status--instructions')
     setCards(shuffleArray(teamCardsArray).slice(0,5))
     setScoreboardInProp(true)
     setGameboardInProp(true)
+    setStatusInProp(true)
+
   }
 
   const advanceRound = (round) => {
@@ -120,12 +124,16 @@ function Game() {
         }
       }, 3000)
       setTimeout( () => {
-        setStatusInProp(false)
-      }, 2000)
+        setStatusInProp(false);
+        setTimeout( () => {
+          setStatusMessage('')
+        }, 2000)
+      }, 1500)
     } else {
       setStatusMessage('You Win')
       setStatusInProp(true)
       setGameboardInProp(false)
+      setScoreboardInProp(false)
       setTimeout(() => {
         resetGame()
       }, 3000)   
@@ -159,8 +167,8 @@ function Game() {
         appear={true}
         enter={true}
         exit={true}
-        timeout={1000}
-        classNames="fade"
+        timeout={2000}
+        classNames="fade-status"
       >
         <ScoreBoard
           round={round}
